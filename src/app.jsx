@@ -1,5 +1,19 @@
+import React from 'react';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
+  }
+`;
+
 const App = () => {
-  return <div className='App'>Test</div>;
+  return (
+    <>
+      <GlobalStyle />
+      <div>안녕하세요</div>
+    </>
+  );
 };
 
 export default App;
