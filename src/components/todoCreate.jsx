@@ -75,17 +75,29 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const TodoCreate = () => {
+const TodoCreate = ({ onCreate }) => {
   const [open, setOpen] = useState(false);
-
+  const [value, setValue] = useState('');
   const onToggle = () => setOpen(!open);
+  const onChange = (e) => setValue(e.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onCreate(value);
+    setValue('');
+    setOpen(false);
+  };
 
   return (
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
-            <Input autoFocus placeholder='할 일을 입력 후, Enter 를 누르세요' />
+          <InsertForm onSubmit={onSubmit}>
+            <Input
+              autoFocus
+              placeholder='やることを入力後、Enterを押してください'
+              onChange={onChange}
+              value={value}
+            />
           </InsertForm>
         </InsertFormPositioner>
       )}
