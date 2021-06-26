@@ -25,12 +25,21 @@ const TodoHeadBlock = styled.div`
   }
 `;
 
-function TodoHead() {
+function TodoHead({ todos }) {
+  const undoneTasks = todos.filter((todo) => !todo.done);
+  const today = new Date();
+  const dateString = today.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  const dayName = today.toLocaleDateString('ja-JP', { weekday: 'long' });
+
   return (
     <TodoHeadBlock>
-      <h1>2021年 6月 25日</h1>
-      <div className='day'>金曜日</div>
-      <div className='tasks-left'>未完了タスク２件</div>
+      <h1>{dateString}</h1>
+      <div className='day'>{dayName}</div>
+      <div className='tasks-left'>未完了タスク{undoneTasks.length}件</div>
     </TodoHeadBlock>
   );
 }
