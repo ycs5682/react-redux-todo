@@ -1,3 +1,9 @@
+const TOGGLE_TODO = 'todos/TOGGLE_TODO';
+const REMOVE_TODO = 'todos/REMOVE_TODO';
+
+export const toggleTODO = (id) => ({ type: TOGGLE_TODO, id });
+export const removeTODO = (id) => ({ type: REMOVE_TODO, id });
+
 const initialState = [
   {
     id: 1,
@@ -23,6 +29,10 @@ const initialState = [
 
 export default function todos(state = initialState, action) {
   switch (action.type) {
+    case TOGGLE_TODO:
+      return state.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo));
+    case REMOVE_TODO:
+      return state.filter((todo) => todo.id !== action.id);
     default:
       return state;
   }
