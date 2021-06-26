@@ -9,13 +9,12 @@ const TodoListBlock = styled.div`
   overflow-y: auto;
 `;
 
-const TodoList = () => {
+const TodoList = ({ todos }) => {
   return (
     <TodoListBlock>
-      <TodoItem text='プロジェクト作成' done={true} />
-      <TodoItem text='コンポーネント作成' done={true} />
-      <TodoItem text='Rudux作成' done={false} />
-      <TodoItem text='機能実装' done={false} />
+      {todos.map((todo) => (
+        <TodoItem key={todo.id} id={todo.id} text={todo.text} done={todo.done}></TodoItem>
+      ))}
     </TodoListBlock>
   );
 };
