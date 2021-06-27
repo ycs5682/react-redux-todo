@@ -1,19 +1,10 @@
-const ADD_TODO = 'todos/ADD_TODO';
-const TOGGLE_TODO = 'todos/TOGGLE_TODO';
-const REMOVE_TODO = 'todos/REMOVE_TODO';
-
+import { createSlice } from '@reduxjs/toolkit';
 let nextId = 5;
-export const addTodo = (text) => ({
-  type: ADD_TODO,
-  todo: { id: nextId++, text }
-});
-export const toggleTODO = (id) => ({ type: TOGGLE_TODO, id });
-export const removeTODO = (id) => ({ type: REMOVE_TODO, id });
 
 const initialState = [
   {
     id: 1,
-    text: 'プロジェクト作成',
+    text: 'プロジェクト作成11',
     done: true
   },
   {
@@ -33,15 +24,23 @@ const initialState = [
   }
 ];
 
-export default function todos(state = initialState, action) {
-  switch (action.type) {
-    case ADD_TODO:
-      return state.concat(action.todo);
-    case TOGGLE_TODO:
-      return state.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo));
-    case REMOVE_TODO:
-      return state.filter((todo) => todo.id !== action.id);
-    default:
-      return state;
+export const todos = createSlice({
+  name: 'todos',
+  initialState: initialState,
+  reducers: {
+    addTodo(state, action) {
+      return state.concat({ id: nextId++, text: action.payload, done: action.done });
+    },
+    toggleTodo(state, action) {
+      return state.map((todo) =>
+        todo.id === action.payload ? { ...todo, done: !todo.done } : todo
+      );
+    },
+    removeTodo(state, action) {
+      return state.filter((todo) => todo.id !== action.payload);
+    }
   }
-}
+});
+
+export const { addTodo, toggleTodo, removeTodo } = todos.actions;
+export default todos.reducer;
